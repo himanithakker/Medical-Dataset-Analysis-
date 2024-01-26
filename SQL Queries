@@ -1,9 +1,107 @@
-# Healthcare Dataset Analysis
 
-## 1. Average Hospital Charges Analysis
+1 - Cusotmers with Major Surgeries 
 
-To gain valuable insights into healthcare cost trends, we start by analyzing the average hospital charges.
+SELECT
+  cid,
+  noofmajorsurgeries
+FROM
+  medical.medical
+WHERE
+  noofmajorsurgeries < 5
+  
+2 -  Smoking patients with Transplant Analysis 
 
-```sql
-SELECT AVG(charges) AS avg_charges
-FROM hospital.hospitalisation_details;
+SELECT
+  a.c_id,
+  a.yr,
+  a.charges,
+  b.b_m_i,
+  b.smoker,
+  b.any_transplant
+FROM hospital.hospitalisation_details AS a
+LEFT JOIN medical.medical AS b ON a.c_id = b.cid
+where any_transplant = 'yes'
+AND smoker = 'yes'
+ORDER by a.yr ASC
+
+3 -  Patients with Cancer Hisotery and noofmajorsurgeries 
+
+select cid , noofmajorsurgeries, cancer_hist
+from medical.medical where 
+noofmajorsurgeries < 2 and 
+cancer_hist ='yes'
+
+4 -  Customer with major surgiers and their City Tiers 
+
+
+SELECT
+  a.c_id,
+  a.ct_tier,
+  b.noofmajorsurgeries
+FROM hospital.hospitalisation_details AS a
+LEFT JOIN medical.medical AS b ON a.c_id = b.cid
+where noofmajorsurgeries > 1
+
+5 - Average BMI by Citi Tier 
+
+SELECT
+  a.c_id,
+  AVG(b.b_m_i),
+  a.ct_tier
+FROM hospital.hospitalisation_details AS a
+LEFT JOIN medical.medical AS b ON a.c_id = b.cid
+where a.yr = '1995'
+group by a.ct_tier, a.c_id 
+
+6 - High BMI Cusomters 
+
+SELECT
+  a.c_id,
+  a.charges,
+  b.b_m_i
+FROM hospital.hospitalisation_details AS a
+LEFT JOIN medical.medical AS b ON a.c_id = b.cid
+where b.b_m_i > 30
+
+
+7 -  Cusomoter with Highest Charges and city tier by year 
+
+SELECT
+  a.c_id,
+  a.yr,
+  SUM(a.charges) as Total_charges,
+  a.ct_tier
+FROM hospital.hospitalisation_details AS a
+LEFT JOIN medical.medical AS b ON a.c_id = b.cid
+group by a.yr, a.c_id, a.ct_tier , a.charges
+Order by a.yr ASC 
+
+8- Top 3 cusotmers with Highest Average Yearly Charges 
+
+SELECT
+  c_id,
+  Avg(charges),
+  ct_tier,
+  yr
+FROM hospital.hospitalisation_details
+Group by c_id, charges, ct_tier, yr
+Limit 3;
+
+9 -  Year with maximum hopsitalizations 
+
+SELECT
+  yr,
+  COUNT(*) AS total_hospitalizations
+FROM
+  hospital.hospitalisation_details
+GROUP BY
+  yr
+ORDER BY
+  total_hospitalizations DESC
+LIMIT 1;
+
+ 
+
+
+
+ 
