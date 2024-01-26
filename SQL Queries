@@ -1,1 +1,19 @@
+Average Hospital Charges Analysis 
+
+we aim to analyze a medical dataset to determine the average hospital charges. This analysis can provide essential insights into healthcare cost trends, helping hospitals and patients understand the financial aspects of medical care. By calculating the average hospital charges, we gain valuable information for financial planning, cost optimization, and transparency in healthcare services
+
+select avg(charges) as avg_charges from 
+hospital.hospitalisation_details 
+
+
+*Cusotmer with Major Surgeries*  
+
+SELECT
+  a.c_id,
+  a.ct_tier,
+  b.noofmajorsurgeries
+FROM hospital.hospitalisation_details AS a
+LEFT JOIN medical.medical AS b ON a.c_id = b.cid
+where noofmajorsurgeries > 1
+
 
