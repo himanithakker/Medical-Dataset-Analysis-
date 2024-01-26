@@ -17,3 +17,10 @@ LEFT JOIN medical.medical AS b ON a.c_id = b.cid
 where noofmajorsurgeries > 1
 
 
+# Medical Dataset Analysis
+
+## Average Hospital Charges Analysis
+
+```sql
+SELECT AVG(charges) AS avg_charges
+FROM hospital.hospitalisation_details;
